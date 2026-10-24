@@ -6,6 +6,20 @@ let modo = 'dijkstra';
 let origem = 'V0';
 let destino = 'V7';
 
+// No celular, a árvore de Prim ganha uma disposição vertical própria.
+// O grafo de Dijkstra mantém sua disposição ampla para exibir todas as trilhas.
+const telaPequena = window.matchMedia('(max-width: 730px)');
+const posicoesPrimMobile = {
+  V0: {x:100,y:60},
+  V1: {x:235,y:145},
+  V2: {x:108,y:230},
+  V3: {x:237,y:315},
+  V5: {x:186,y:410},
+  V4: {x:85,y:535},
+  V6: {x:275,y:535},
+  V7: {x:260,y:680}
+};
+
 for (const v of VERTICES) {
   for (const seletor of ['#origem','#destino']) {
     const option = document.createElement('option');
@@ -26,16 +40,26 @@ function svg(tag, props = {}, parent = $('#mapa')) {
   return el;
 }
 function arestaKey(a,b) { return [a,b].sort().join('|'); }
-function pos(v) { return {x:v.x*9.15+42,y:v.y*5+34}; }
+function pos(v,vertical=false) {
+  return vertical ? posicoesPrimMobile[v.id] : {x:v.x*9.15+42,y:v.y*5+34};
+}
 function nome(id) { return VERTICES.find(v=>v.id===id)?.nome ?? id; }
 function mostrarGrafo(arestasSelecionadas,verticesSelecionados) {
-  $('#mapa').replaceChildren();
-  for (let x=0;x<=1000;x+=50) svg('line',{x1:x,y1:0,x2:x,y2:580,class:'gridline'});
-  for (let y=0;y<=580;y+=50) svg('line',{x1:0,y1:y,x2:1000,y2:y,class:'gridline'});
+  const vertical = modo==='prim' && telaPequena.matches;
+  const largura = vertical ? 360 : 1000;
+  const altura = vertical ? 760 : 580;
+  const mapa = $('#mapa');
+  mapa.setAttribute('viewBox', '0 0 '+largura+' '+altura);
+  $('.map-wrap').classList.toggle('vertical-tree', vertical);
+  mapa.replaceChildren();
+  for (let x=0;x<=largura;x+=50) svg('line',{x1:x,y1:0,x2:x,y2:altura,class:'gridline'});
+  for (let y=0;y<=altura;y+=50) svg('line',{x1:0,y1:y,x2:largura,y2:y,class:'gridline'});
   for (const e of ARESTAS) {
-    const a=pos(VERTICES.find(v=>v.id===e.de));
-    const b=pos(VERTICES.find(v=>v.id===e.para));
     const escolhido=arestasSelecionadas.has(arestaKey(e.de,e.para));
+    // Na visualização vertical, apenas as arestas da AGM são desenhadas.
+    if(vertical && !escolhido) continue;
+    const a=pos(VERTICES.find(v=>v.id===e.de),vertical);
+    const b=pos(VERTICES.find(v=>v.id===e.para),vertical);
     const classe=escolhido?'chosen':modo==='prim'?'dim':'';
     svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:'edge '+classe});
     const x=(a.x+b.x)/2,y=(a.y+b.y)/2;
@@ -44,12 +68,12 @@ function mostrarGrafo(arestasSelecionadas,verticesSelecionados) {
     label.textContent=e.peso;
   }
   for (const v of VERTICES) {
-    const {x,y}=pos(v);
+    const {x,y}=pos(v,vertical);
     const classes=['node',verticesSelecionados.has(v.id)?'chosen':'',modo==='dijkstra'&&v.id===origem?'origin':''].join(' ');
     const group=svg('g',{class:classes,tabindex:0,role:'button','aria-label':v.id+' '+v.nome});
-    svg('circle',{cx:x,cy:y,r:26},group);
+    svg('circle',{cx:x,cy:y,r:vertical?24:26},group);
     const code=svg('text',{x,y:y+1},group);code.textContent=v.id;
-    const title=svg('text',{x,y:y+49,class:'name'},group);title.textContent=v.nome;
+    const title=svg('text',{x,y:y+(vertical?42:49),class:'name'},group);title.textContent=v.nome;
     function selecionar(){
       if(modo!=='dijkstra')return;
       destino=v.id;
@@ -125,7 +149,7 @@ function atualizar(){
     $('#custo').textContent=agm.custoTotal+' km';
     $('#custo-legenda').textContent=agm.arestas.length+' trilhas selecionadas';
     $('#mapa-titulo').textContent='Árvore geradora mínima';
-    $('#mapa-legenda').textContent='Trilhas em verde compõem a árvore geradora mínima';
+    $('#mapa-legenda').textContent='As trilhas em verde compõem a árvore geradora mínima';
     $('#resultado-titulo').textContent='Arestas selecionadas pelo Prim';
     $('#resultado-tipo').textContent='PRIM';
     $('#explicacao-titulo').textContent='Como funciona Prim?';
@@ -138,4 +162,6 @@ $('#origem').addEventListener('change',e=>{origem=e.target.value;atualizar();});
 $('#destino').addEventListener('change',e=>{destino=e.target.value;atualizar();});
 $('#modo-dijkstra').addEventListener('click',()=>{modo='dijkstra';atualizar();});
 $('#modo-prim').addEventListener('click',()=>{modo='prim';atualizar();});
+// Atualiza o SVG ao virar a tela ou redimensionar o navegador.
+telaPequena.addEventListener('change', atualizar);
 atualizar();
