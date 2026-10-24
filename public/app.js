@@ -120,6 +120,9 @@ function atualizar(){
   }
   $('#origem').disabled=!d;
   $('#destino').disabled=!d;
+  $('.map-mobile-hint').textContent=d
+    ? 'Deslize o mapa lateralmente para explorar as trilhas.'
+    : 'Árvore adaptada ao celular: todos os vértices aparecem na vertical.';
   if(d){
     const resultado=dijkstra(origem);
     const caminho=reconstruirCaminho(resultado,destino);
