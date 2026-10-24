@@ -109,15 +109,35 @@ O programa foi conferido no terminal, com a origem V0. O algoritmo de Dijkstra r
 
 Os testes automatizados cobrem: (1) estrutura do grafo, pesos e bidirecionalidade; (2) menores distâncias e caminhos de Dijkstra; (3) troca de origem e validação da origem; (4) quantidade de arestas e custo da AGM; (5) falha esperada de Prim em grafo desconexo. Os cinco testes passaram na execução local.
 
-### 5.3 Capturas de tela a anexar
+### 5.3 Registros reais de execução
 
-**Atenção: antes da entrega, incluir aqui as capturas reais do programa em execução e incorporá-las ao PDF final.**
+Os registros apresentados nesta seção foram disponibilizados no repositório da atividade. Eles complementam as tabelas de resultados, demonstrando a execução dos comandos no terminal e o uso do painel gráfico.
 
-- **Figura 1 — Dijkstra:** painel do navegador mostrando grafo, origem V0, destino V7, caminho destacado e distância de 20 km.
-- **Figura 2 — Prim:** painel mostrando árvore geradora mínima e custo total de 28 km.
-- **Figura 3 — Terminal:** saída de `npm run demo` e/ou dos testes com `npm test` (opcional como evidência adicional).
+**Figura 1 — Execução dos testes automatizados (`npm test`).**
 
-As capturas devem ser feitas durante a execução do projeto, pois o enunciado exige evidências visuais reais.
+A imagem registra o resultado da suíte de testes que verifica a estrutura do grafo e o comportamento dos algoritmos de Dijkstra e Prim.
+
+![Execução dos testes automatizados no terminal](https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce)
+
+*Fonte: captura de tela da execução do projeto.*
+
+**Figura 2 — Demonstração pelo terminal (`npm run demo`).**
+
+O comando apresenta primeiro a lista de adjacência (vértices, vizinhos e pesos) e, na sequência, os resultados dos dois algoritmos.
+
+![Saída do comando npm run demo](https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f)
+
+*Fonte: captura de tela da execução do projeto.*
+
+**Vídeo — Interface interativa de grafos.**
+
+A demonstração em vídeo complementa as imagens e permite observar a utilização do painel no navegador: [assistir ao vídeo de execução](https://github.com/user-attachments/assets/0538dcdf-349b-4305-8ed5-ecf9af2bb8a6).
+
+**Registro adicional recomendado para o PDF:** acrescentar uma captura do painel no modo Dijkstra, com V0 → V7 destacado e custo de 20 km, e outra no modo Prim, com as sete trilhas da AGM e custo de 28 km. O vídeo é um complemento, mas o enunciado exige capturas de tela no próprio relatório.
+
+### 5.4 Exportação para PDF
+
+Na versão final para o Canvas, conferir se as Figuras 1 e 2 aparecem **incorporadas ao documento**, não apenas como links externos. Incluir os nomes da dupla na capa e exportar o relatório para PDF, preservando as tabelas e as evidências visuais.
 
 ## 6. Conclusão
 
