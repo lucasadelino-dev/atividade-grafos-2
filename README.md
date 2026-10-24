@@ -1,96 +1,219 @@
-# Trilhas do Parque — Atividade Prática 02
+<div align="center">
 
-Projeto da disciplina **Algoritmos em Grafos**: parque turístico modelado como um grafo **não direcionado, ponderado e conexo**. Implementa **Dijkstra** (menores caminhos) e **Prim** (Árvore Geradora Mínima), com interface web interativa em JavaScript puro.
+# PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS
+### PUC Minas — Unidade Betim
+### Curso de Sistemas de Informação
 
-## Como executar
+**Disciplina:** Algoritmos e Grafos  
+**Professora:** Roselene
 
-Requisito: **Node.js 18 ou superior**. Não utiliza bibliotecas externas e não exige instalação de dependências.
+# ATIVIDADE PRÁTICA 02
+## Aplicação de Dijkstra e Prim em um Parque Turístico
 
-1. Clone o repositório: `git clone https://github.com/lucasadelino-dev/atividade-grafos-2.git`.
-2. Entre na pasta: `cd atividade-grafos-2`.
-3. Inicie o servidor: `npm start`.
-4. Abra **http://localhost:3000** no navegador.
+**Discentes:**  
+Lucas Gabriel Adelino Araújo  
+Bernardo Maia Lomas Ameno
 
-**Hospedagem:** o site é estático e está configurado para publicação pelo **GitHub Pages**. Depois da ativação inicial, o endereço esperado é **https://lucasadelino-dev.github.io/atividade-grafos-2/**. Não é preciso executar o servidor Node.js na hospedagem.
+**Betim — MG**  
+**24 de outubro de 2026**
 
-Outros comandos:
+</div>
 
-- `npm run demo` — exibe o grafo e os resultados de Dijkstra e Prim no terminal (origem V0).
-- `npm run demo -- V4` — executa Dijkstra com origem V4.
-- `npm test` — executa 5 testes automatizados com `node:test`.
+---
 
-## Funcionalidades
+## 1. Apresentação do projeto
 
-- **8 vértices (V0–V7)** e **15 arestas**, ponderadas por quilômetros.
-- Apresentação gráfica de trilhas e seus pesos, com SVG.
-- **Dijkstra:** seleção da origem e do destino, destaque visual do caminho e tabela de custos.
-- **Prim:** exibição das 7 arestas da árvore geradora mínima e do custo total.
-- Saída via terminal para demonstrar a estrutura do grafo e os resultados.
-- Testes dos algoritmos e estrutura de dados.
+Este repositório contém o código-fonte, os testes automatizados, a interface de visualização e a documentação da **Atividade Prática 02**, desenvolvida na disciplina de **Algoritmos e Grafos** do curso de Sistemas de Informação da PUC Minas Betim.
 
-## Resultados com origem V0
+A proposta consiste em representar um parque turístico por meio de um **grafo não direcionado, ponderado e conexo**. Seus vértices correspondem a pontos de interesse, suas arestas representam as trilhas existentes e os pesos indicam as distâncias de cada ligação, em quilômetros.
 
-| Destino | Menor custo |
-| --- | ---: |
-| V0 | 0 km |
-| V1 | 4 km |
-| V2 | 7 km |
-| V3 | 12 km |
-| V4 | 10 km |
-| V5 | 12 km |
-| V6 | 15 km |
-| V7 | 20 km |
+O sistema resolve duas questões:
 
-**Prim:** a Árvore Geradora Mínima contém **7 arestas** e soma **28 km**.
+1. **Dijkstra:** qual é o menor caminho entre um ponto de origem e cada um dos demais locais do parque?
+2. **Prim:** quais trilhas permitem manter todos os pontos interligados com a menor soma possível de distâncias?
 
-## Estrutura
+Os locais e as distâncias utilizados são fictícios, definidos exclusivamente para a demonstração dos algoritmos.
 
-- `public/algoritmos.js` — grafo, Dijkstra e Prim.
-- `public/app.js` — interação no navegador e visualização SVG.
-- `public/index.html` e `public/styles.css` — interface.
-- `src/server.js` — servidor HTTP nativo do Node.js.
-- `src/demo.js` — execução pelo terminal.
-- `tests/algoritmos.test.js` — testes automatizados.
-- `RELATORIO.md` — relatório acadêmico.
+## 2. Objetivos e requisitos atendidos
 
+| Requisito | Implementação |
+| --- | --- |
+| Grafo com pelo menos oito vértices | Oito vértices, identificados de V0 a V7 |
+| Grafo ponderado, não direcionado e conexo | Quinze arestas com pesos positivos e ligações bidirecionais |
+| Impressão da estrutura antes dos algoritmos | Listagem de adjacência exibida por \`npm run demo\` |
+| Menores caminhos a partir de origem informada | Dijkstra com escolha da origem e reconstrução dos caminhos |
+| Árvore Geradora Mínima | Implementação do algoritmo de Prim |
+| Exibição das arestas da AGM e do custo total | Relação das sete arestas selecionadas e soma de 28 km |
+| Evidências de funcionamento | Vídeo da aplicação, capturas do terminal e testes automatizados |
 
+## 3. Modelagem e representação do grafo
 
-## Demonstração da aplicação
+A estrutura escolhida foi a **lista de adjacência**, montada a partir de um conjunto de arestas. Como o grafo é não direcionado, cada ligação é registrada nas duas listas de vizinhança correspondentes.
 
-### Vídeo de funcionamento
+### 3.1 Vértices
 
-O vídeo demonstra o uso do painel interativo e a visualização do grafo.
+| Vértice | Local |
+| --- | --- |
+| V0 | Portaria |
+| V1 | Centro de visitantes |
+| V2 | Mirante |
+| V3 | Cachoeira |
+| V4 | Área de descanso |
+| V5 | Lago |
+| V6 | Restaurante |
+| V7 | Camping |
+
+### 3.2 Arestas e pesos
+
+| Aresta | Peso | Aresta | Peso |
+| --- | ---: | --- | ---: |
+| V0 — V1 | 4 km | V2 — V5 | 7 km |
+| V0 — V2 | 8 km | V3 — V5 | 4 km |
+| V0 — V4 | 10 km | V3 — V7 | 11 km |
+| V1 — V2 | 3 km | V4 — V5 | 2 km |
+| V1 — V3 | 9 km | V4 — V6 | 6 km |
+| V1 — V6 | 12 km | V5 — V6 | 3 km |
+| V2 — V3 | 5 km | V5 — V7 | 8 km |
+| V6 — V7 | 7 km | — | — |
+
+## 4. Algoritmos implementados
+
+### 4.1 Dijkstra — menores caminhos
+
+O algoritmo de Dijkstra determina os menores custos de deslocamento a partir de um vértice escolhido. Ele mantém as distâncias conhecidas e os predecessores de cada vértice, atualizando esses valores ao encontrar um caminho de menor custo. Os predecessores permitem reconstruir a sequência completa dos vértices percorridos.
+
+Para a origem **V0 (Portaria)**, foram obtidos os seguintes resultados:
+
+| Destino | Caminho mínimo | Custo |
+| --- | --- | ---: |
+| V0 | V0 | 0 km |
+| V1 | V0 → V1 | 4 km |
+| V2 | V0 → V1 → V2 | 7 km |
+| V3 | V0 → V1 → V2 → V3 | 12 km |
+| V4 | V0 → V4 | 10 km |
+| V5 | V0 → V4 → V5 | 12 km |
+| V6 | V0 → V4 → V5 → V6 | 15 km |
+| V7 | V0 → V4 → V5 → V7 | 20 km |
+
+**Exemplo:** o caminho mínimo entre a Portaria (V0) e o Camping (V7) é **V0 → V4 → V5 → V7**, com distância de **20 km**.
+
+### 4.2 Prim — Árvore Geradora Mínima
+
+O algoritmo de Prim constrói uma **Árvore Geradora Mínima (AGM)**. Partindo de um vértice inicial, adiciona sucessivamente a aresta de menor peso que conecta a árvore parcial a um vértice ainda não incluído, sem formar ciclos.
+
+Com início em V0, o algoritmo seleciona:
+
+| Ordem | Aresta selecionada | Peso |
+| ---: | --- | ---: |
+| 1 | V0 — V1 | 4 km |
+| 2 | V1 — V2 | 3 km |
+| 3 | V2 — V3 | 5 km |
+| 4 | V3 — V5 | 4 km |
+| 5 | V5 — V4 | 2 km |
+| 6 | V5 — V6 | 3 km |
+| 7 | V6 — V7 | 7 km |
+| | **Custo total** | **28 km** |
+
+A árvore possui **7 arestas**, conecta os **8 vértices** e apresenta custo total de **28 km**. Diferentemente de Dijkstra, Prim minimiza a soma das arestas necessárias para manter todo o grafo conectado, não as distâncias a partir de uma origem.
+
+## 5. Tecnologias e organização
+
+O projeto foi desenvolvido com **JavaScript (ES Modules)** e **Node.js**. A interface utiliza **HTML, CSS e SVG**, sem bibliotecas externas. O mesmo módulo de algoritmos é utilizado pela demonstração em terminal, pelos testes e pelo navegador.
+
+| Caminho | Responsabilidade |
+| --- | --- |
+| \`public/algoritmos.js\` | Dados do grafo, lista de adjacência, Dijkstra e Prim |
+| \`public/index.html\` | Estrutura da interface web |
+| \`public/styles.css\` | Estilos e adaptação a diferentes tamanhos de tela |
+| \`public/app.js\` | Renderização interativa do grafo e dos resultados |
+| \`src/server.js\` | Servidor HTTP para execução local |
+| \`src/demo.js\` | Exibição textual da estrutura e dos algoritmos |
+| \`tests/algoritmos.test.js\` | Testes automatizados com o módulo nativo \`node:test\` |
+| \`RELATORIO.md\` | Relatório técnico detalhado da atividade |
+
+## 6. Instruções para execução
+
+### 6.1 Pré-requisito
+
+É necessário possuir **Node.js 18 ou superior** instalado. Não há dependências externas; portanto, não é necessário executar \`npm install\`.
+
+### 6.2 Executar a aplicação web localmente
+
+\`\`\`bash
+git clone https://github.com/lucasadelino-dev/atividade-grafos-2.git
+cd atividade-grafos-2
+npm start
+\`\`\`
+
+Acesse **http://localhost:3000** no navegador. No painel é possível alternar entre Dijkstra e Prim, selecionar a origem e o destino e observar as trilhas destacadas e os respectivos custos.
+
+### 6.3 Executar os algoritmos no terminal
+
+\`\`\`bash
+npm run demo
+\`\`\`
+
+Esse comando imprime inicialmente a **lista de adjacência do grafo** e, em seguida, os caminhos de Dijkstra (origem padrão V0) e as arestas da Árvore Geradora Mínima calculada por Prim.
+
+É possível definir outra origem para Dijkstra:
+
+\`\`\`bash
+npm run demo -- V4
+\`\`\`
+
+### 6.4 Executar os testes automatizados
+
+\`\`\`bash
+npm test
+\`\`\`
+
+A suíte inclui **cinco casos de teste**, cobrindo a estrutura não direcionada e ponderada do grafo, os custos e caminhos de Dijkstra, a troca de origem, o resultado de Prim e a identificação de grafos desconexos.
+
+## 7. Evidências de execução
+
+Os registros abaixo foram incorporados a este repositório para demonstrar a execução do projeto.
+
+### 7.1 Vídeo de demonstração da interface
+
+O vídeo apresenta a aplicação gráfica e a interação com o mapa do parque.
 
 https://github.com/user-attachments/assets/0538dcdf-349b-4305-8ed5-ecf9af2bb8a6
 
-### Evidências de execução
+### 7.2 Execução dos testes automatizados
 
-**Testes automatizados — `npm test`**
+**Figura 1 — Saída de \`npm test\` no terminal.**
 
-A execução da suíte de testes verifica a estrutura do grafo, os menores caminhos de Dijkstra e a Árvore Geradora Mínima de Prim.
+![Figura 1 — Captura de tela dos testes automatizados](https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce)
 
-![Captura de tela da execução dos testes automatizados](https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce)
+### 7.3 Impressão do grafo e resultados dos algoritmos
 
-**Saída no terminal — `npm run demo`**
+**Figura 2 — Saída de \`npm run demo\` no terminal, com lista de adjacência e resultados.**
 
-A demonstração imprime o grafo com seus pesos, os menores caminhos e as arestas da árvore geradora mínima.
+![Figura 2 — Captura de tela da demonstração de Dijkstra e Prim](https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f)
 
-![Captura de tela do terminal após npm run demo](https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f)
+## 8. Disponibilização da interface
 
-> As capturas e o vídeo acima foram adicionados ao README para documentar a execução. O relatório acadêmico organiza essas evidências e inclui os resultados obtidos.
+O frontend é composto por arquivos estáticos presentes em \`public/\` e está preparado para publicação pelo **GitHub Pages**, por meio do workflow [\`.github/workflows/pages.yml\`](./.github/workflows/pages.yml). O workflow executa os testes e, caso sejam aprovados, publica o conteúdo da pasta.
 
-## Publicação automática no GitHub Pages
+**Endereço previsto:** https://lucasadelino-dev.github.io/atividade-grafos-2/
 
-O workflow [`pages.yml`](./.github/workflows/pages.yml) executa `npm test` e publica os arquivos de `public/` sempre que houver alterações de código na branch `main`.
+> A disponibilidade do site depende da configuração do GitHub Pages e da conclusão bem-sucedida do workflow de publicação. O código-fonte e a execução local não dependem da hospedagem.
 
-**Ativação inicial (uma única vez):** abra [Settings → Pages](https://github.com/lucasadelino-dev/atividade-grafos-2/settings/pages), escolha **GitHub Actions** em **Build and deployment → Source** e salve. Em seguida, acompanhe a publicação na [aba Actions](https://github.com/lucasadelino-dev/atividade-grafos-2/actions); se necessário, execute o workflow manualmente em **Run workflow**.
+## 9. Considerações finais
 
-Após o primeiro deploy concluído, o site deverá estar em **https://lucasadelino-dev.github.io/atividade-grafos-2/**. Como os imports e os assets usam caminhos relativos, o frontend funciona também sob o subdiretório do repositório. Não há dependências de serviços externos para os algoritmos.
+A atividade demonstra como um mesmo grafo ponderado pode ser utilizado para resolver problemas diferentes de planejamento em um parque turístico. O algoritmo de Dijkstra permite identificar os **menores caminhos** a partir de uma origem, enquanto Prim permite determinar o **conjunto de trilhas de menor custo total** para conectar todos os destinos.
 
-## Relatório e entrega
+A interface gráfica, a execução pelo terminal e os testes automatizados complementam a implementação ao facilitar a análise e a verificação dos resultados.
 
-Consulte o [relatório técnico](./RELATORIO.md) para a modelagem, a explicação dos algoritmos e as evidências de execução.
+O relatório da atividade, com desenvolvimento mais detalhado e as evidências necessárias para a entrega, está disponível em **[RELATORIO.md](./RELATORIO.md)**. Conforme o enunciado, a entrega no Canvas exige o **relatório em PDF com capturas de tela** e os arquivos de código-fonte (ou o link do repositório público).
 
-**Entrega acadêmica:** o Canvas exige o relatório em PDF, incluindo capturas de tela do funcionamento do programa. O código pode ser entregue pelo repositório público.
+---
 
-Os dados do parque são fictícios e foram elaborados para demonstrar os algoritmos.
+<div align="center">
+
+**Pontifícia Universidade Católica de Minas Gerais — PUC Minas Betim**  
+**Algoritmos e Grafos — Atividade Prática 02**  
+**Lucas Gabriel Adelino Araújo · Bernardo Maia Lomas Ameno**  
+**Betim, 24 de outubro de 2026**
+
+</div>
