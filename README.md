@@ -51,8 +51,20 @@ Outros comandos:
 - `tests/algoritmos.test.js` — testes automatizados.
 - `RELATORIO.md` — relatório acadêmico.
 
-## Relatório e entrega
 
-Leia [RELATORIO.md](./RELATORIO.md). Para entregar no Canvas, **exporte o relatório para PDF com capturas de tela reais do programa em funcionamento**. O enunciado permite enviar um link do GitHub em substituição ao código somente se o repositório estiver **público**.
+Execução
+
+
+https://github.com/user-attachments/assets/0538dcdf-349b-4305-8ed5-ecf9af2bb8a6
+
+testes automatizados
+<img width="990" height="467" alt="image" src="https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce" />
+
+
+npm run demo
+<img width="894" height="914" alt="image" src="https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f" />
+
+
+## Relatório e entrega
 
 Os dados do parque são fictícios e foram elaborados para demonstrar os algoritmos.
