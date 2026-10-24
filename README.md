@@ -11,7 +11,7 @@ Requisito: **Node.js 18 ou superior**. Não utiliza bibliotecas externas e não 
 3. Inicie o servidor: `npm start`.
 4. Abra **http://localhost:3000** no navegador.
 
-**Site publicado:** o link do deploy ficará disponível na página do projeto após a publicação na Vercel. A interface web usa apenas arquivos estáticos de `public/`, então não exige o servidor Node.js para acessar a versão hospedada.
+**Hospedagem:** o site é estático e está configurado para publicação pelo **GitHub Pages**. Depois da ativação inicial, o endereço esperado é **https://lucasadelino-dev.github.io/atividade-grafos-2/**. Não é preciso executar o servidor Node.js na hospedagem.
 
 Outros comandos:
 
@@ -78,6 +78,14 @@ A demonstração imprime o grafo com seus pesos, os menores caminhos e as aresta
 ![Captura de tela do terminal após npm run demo](https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f)
 
 > As capturas e o vídeo acima foram adicionados ao README para documentar a execução. O relatório acadêmico organiza essas evidências e inclui os resultados obtidos.
+
+## Publicação automática no GitHub Pages
+
+O workflow [`pages.yml`](./.github/workflows/pages.yml) executa `npm test` e publica os arquivos de `public/` sempre que houver alterações de código na branch `main`.
+
+**Ativação inicial (uma única vez):** abra [Settings → Pages](https://github.com/lucasadelino-dev/atividade-grafos-2/settings/pages), escolha **GitHub Actions** em **Build and deployment → Source** e salve. Em seguida, acompanhe a publicação na [aba Actions](https://github.com/lucasadelino-dev/atividade-grafos-2/actions); se necessário, execute o workflow manualmente em **Run workflow**.
+
+Após o primeiro deploy concluído, o site deverá estar em **https://lucasadelino-dev.github.io/atividade-grafos-2/**. Como os imports e os assets usam caminhos relativos, o frontend funciona também sob o subdiretório do repositório. Não há dependências de serviços externos para os algoritmos.
 
 ## Relatório e entrega
 
