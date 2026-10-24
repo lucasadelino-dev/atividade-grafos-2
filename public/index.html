@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Grafo interativo para Dijkstra e Prim em um parque turístico.">
+  <title>Trilhas do Parque | Algoritmos em Grafos</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon" aria-hidden="true">⌁</span><div>TRILHAS<small>DO PARQUE</small></div></div>
+    <section class="intro"><span class="eyebrow">LABORATÓRIO DE GRAFOS</span><h1>Encontre a melhor rota.</h1><p>Um parque, oito destinos e dois algoritmos para explorar a rede de trilhas.</p></section>
+    <section><span class="eyebrow">ALGORITMO</span>
+      <div class="modes" role="group" aria-label="Algoritmo selecionado">
+        <button class="mode active" type="button" id="modo-dijkstra" aria-pressed="true"><span class="mode-icon">↗</span><span><strong>Dijkstra</strong><small>Menores caminhos</small></span></button>
+        <button class="mode" type="button" id="modo-prim" aria-pressed="false"><span class="mode-icon">◇</span><span><strong>Prim</strong><small>Árvore geradora mínima</small></span></button>
+      </div>
+    </section>
+    <section class="controls"><span class="eyebrow">EXPERIMENTE</span>
+      <label for="origem">Ponto de partida</label><select id="origem"></select>
+      <label for="destino">Destino em destaque</label><select id="destino"></select>
+    </section>
+    <div class="sidebar-bottom"><span class="dot"></span> Grafo não direcionado e ponderado <small>Atividade Prática 02 • Algoritmos em Grafos</small></div>
+  </aside>
+  <main class="content">
+    <header class="topbar"><div><span class="eyebrow mint">PAINEL INTERATIVO</span><h2>Mapa de trilhas <span class="light">/ visão geral</span></h2></div><span class="status"><span class="dot"></span> Sistema operacional</span></header>
+    <section class="metrics" aria-label="Indicadores">
+      <article class="metric"><span>DESTINOS</span><strong id="quantidade-vertices">8</strong><small>Vértices do grafo</small></article>
+      <article class="metric"><span>TRILHAS</span><strong id="quantidade-arestas">15</strong><small>Arestas bidirecionais</small></article>
+      <article class="metric"><span id="custo-titulo">MENOR ROTA</span><strong id="custo">20 <em>km</em></strong><small id="custo-legenda">De V0 até V7</small></article>
+      <article class="metric good"><span>ESTRUTURA</span><strong>Conexo</strong><small>Todos os pontos acessíveis</small></article>
+    </section>
+    <section class="panel">
+      <header class="panel-head"><div><span class="eyebrow mint">VISUALIZAÇÃO</span><h3 id="mapa-titulo">Rede de trilhas</h3></div><div class="legend"><span><i></i> Trilha normal</span><span><i class="active"></i> Trilha destacada</span></div></header>
+      <div class="map-wrap"><svg id="mapa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-label="Mapa de trilhas com oito vértices"></svg></div>
+      <div class="map-foot"><span id="mapa-legenda">Selecione um ponto para explorar</span><span>Pesos em quilômetros</span></div>
+    </section>
+    <section class="bottom">
+      <article class="panel result"><header class="result-head"><div><span class="eyebrow mint">RESULTADOS</span><h3 id="resultado-titulo">Menores caminhos a partir de V0</h3></div><span id="resultado-tipo" class="pill">DIJKSTRA</span></header><div id="resultados" aria-live="polite"></div></article>
+      <article class="panel about"><span class="eyebrow mint">ENTENDA O ALGORITMO</span><h3 id="explicacao-titulo">Como funciona Dijkstra?</h3><p id="explicacao">Determina os custos mínimos para chegar a cada vértice, a partir de uma origem selecionada.</p><div class="callout" id="destaque"></div><div class="tip">O mesmo grafo responde a duas perguntas: o menor caminho entre pontos e a menor rede necessária para conectar todo o parque.</div></article>
+    </section>
+    <footer>Projeto acadêmico • Node.js + JavaScript puro • Sem dependências externas</footer>
+  </main>
+</div>
+</body>
+</html>
