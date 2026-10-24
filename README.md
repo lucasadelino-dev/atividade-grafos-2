@@ -11,6 +11,8 @@ Requisito: **Node.js 18 ou superior**. Não utiliza bibliotecas externas e não 
 3. Inicie o servidor: `npm start`.
 4. Abra **http://localhost:3000** no navegador.
 
+**Site publicado:** o link do deploy ficará disponível na página do projeto após a publicação na Vercel. A interface web usa apenas arquivos estáticos de `public/`, então não exige o servidor Node.js para acessar a versão hospedada.
+
 Outros comandos:
 
 - `npm run demo` — exibe o grafo e os resultados de Dijkstra e Prim no terminal (origem V0).
@@ -52,19 +54,35 @@ Outros comandos:
 - `RELATORIO.md` — relatório acadêmico.
 
 
-Execução
 
+## Demonstração da aplicação
+
+### Vídeo de funcionamento
+
+O vídeo demonstra o uso do painel interativo e a visualização do grafo.
 
 https://github.com/user-attachments/assets/0538dcdf-349b-4305-8ed5-ecf9af2bb8a6
 
-testes automatizados
-<img width="990" height="467" alt="image" src="https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce" />
+### Evidências de execução
 
+**Testes automatizados — `npm test`**
 
-npm run demo
-<img width="894" height="914" alt="image" src="https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f" />
+A execução da suíte de testes verifica a estrutura do grafo, os menores caminhos de Dijkstra e a Árvore Geradora Mínima de Prim.
 
+![Captura de tela da execução dos testes automatizados](https://github.com/user-attachments/assets/21353633-04d5-496a-90a0-5417688370ce)
+
+**Saída no terminal — `npm run demo`**
+
+A demonstração imprime o grafo com seus pesos, os menores caminhos e as arestas da árvore geradora mínima.
+
+![Captura de tela do terminal após npm run demo](https://github.com/user-attachments/assets/5a3ac93b-237b-4026-8be0-ceb956520b3f)
+
+> As capturas e o vídeo acima foram adicionados ao README para documentar a execução. O relatório acadêmico organiza essas evidências e inclui os resultados obtidos.
 
 ## Relatório e entrega
+
+Consulte o [relatório técnico](./RELATORIO.md) para a modelagem, a explicação dos algoritmos e as evidências de execução.
+
+**Entrega acadêmica:** o Canvas exige o relatório em PDF, incluindo capturas de tela do funcionamento do programa. O código pode ser entregue pelo repositório público.
 
 Os dados do parque são fictícios e foram elaborados para demonstrar os algoritmos.
