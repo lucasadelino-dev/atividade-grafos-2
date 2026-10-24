@@ -47,3 +47,24 @@ body{min-width:280px}
   .content{padding-inline:9px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Prim no celular: árvore vertical inteira, sem rolagem horizontal. */
+@media(max-width:730px){
+  .map-wrap.vertical-tree{
+    overflow-x:hidden;
+    overflow-y:visible;
+    touch-action:pan-y;
+  }
+  .map-wrap.vertical-tree #mapa{
+    display:block;
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    height:auto;
+    min-height:0;
+    max-height:none;
+  }
+  .map-wrap.vertical-tree .edge:not(.chosen){display:none}
+  .map-wrap.vertical-tree .node .name{font-size:13px}
+  .map-wrap.vertical-tree .edge-weight{font-size:16px}
+}
