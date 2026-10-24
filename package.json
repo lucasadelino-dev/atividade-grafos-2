@@ -1,0 +1,15 @@
+{
+  "name": "atividade-grafos-2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dijkstra e Prim em um parque turístico.",
+  "scripts": {
+    "start": "node src/server.js",
+    "demo": "node src/demo.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
